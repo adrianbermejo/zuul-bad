@@ -34,7 +34,25 @@ public class Game
      */
     private void createRooms()
     {
+        Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque;
       
+               asilo  = new Room("al asilo: aqui solo hay viejas esto es aburrido demos una vuelta");
+               bar = new Room(" al bar: que pena no hay partida volvere luego");
+                       obrasCalle = new Room("a las obras en la calle: ¿que estara metiendo que ponen unos tubos tan grandes?fijo que lo ponen mal y tienen que volver a levantar");
+              cleseYogaAlAireLibre = new Room(" a cleses de Yoga Al Aire Libre: que de mojucas de buen ver hay hoy voy a hacerme el desmayado a ver si me hace el bocaaboca");
+              hospital = new Room("al hospital: como que me duele un poco la cadera voy a urgencias a que me hagan una radiografia");
+              instituto = new Room("al istituto: que de chavalines jugando al futbol y los que no detras de las chicas que recuerdos ");
+              parque= new Room("al parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
+        
+        // initialise room exits
+         asilo.setExits(bar, obrasCalle, instituto, hospital);
+         bar.setExits(null, null, asilo, null);
+         obrasCalle.setExits(null, null, parque,asilo);
+        instituto.setExits(asilo, parque, null, null);
+       hospital.setExits(asilo, null, null, null);
+      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto);
+      cleseYogaAlAireLibre.setExits(parque,null,null,null);
+        currentRoom =asilo;  // start game outside
     }
 
     /**

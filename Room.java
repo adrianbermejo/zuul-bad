@@ -15,11 +15,11 @@
 public class Room 
 {
     public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southEastExit;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room southEastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -50,8 +50,8 @@ public class Room
             southExit = south;
         if(west != null)
             westExit = west;
-             if(southEast != null)
-           southEastExit = southEast;
+        if(southEast != null)
+            southEastExit = southEast;
     }
 
     /**
@@ -62,4 +62,67 @@ public class Room
         return description;
     }
 
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public Room getExit(String direction){
+        Room devolver = null;
+        if(direction.equals("north")) {
+            devolver = northExit;
+        }
+        if(direction.equals("east")) {
+            devolver = eastExit;
+        }
+        if(direction.equals("south")) {
+            devolver = southExit;
+        }
+        if(direction.equals("west")) {
+            devolver= westExit;
+        }
+        if(direction.equals("southEast")) {
+            devolver = southEastExit;
+        }
+        return devolver;
+    }
+
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public String getExitString(){
+        
+        String devolver ="Exit: ";
+         if(northExit != null) {
+            devolver+="north";
+        }
+        if(eastExit != null) {
+            devolver+="east ";
+        }
+        if(southExit != null) {
+             devolver+="south ";
+        }
+        if(westExit != null) {
+             devolver+="west ";
+        }
+          if(southEastExit != null) {
+           devolver+="southEast ";
+        }
+       
+        
+        
+        return devolver;
+    }
 }
+
+
+
+
+
+
+
+

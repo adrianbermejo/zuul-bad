@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque,salaUrgencias;
+        Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque,salaUrgencias,kiosco;
       
                asilo  = new Room("al asilo: aqui solo hay viejas esto es aburrido demos una vuelta");
                bar = new Room(" al bar: que pena no hay partida volvere luego");
@@ -44,15 +44,17 @@ public class Game
               instituto = new Room("al istituto: que de chavalines jugando al futbol y los que no detras de las chicas que recuerdos ");
               parque= new Room("al parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
         salaUrgencias= new Room("a urgencias: se le levanto a una niña la falda se le vio todo y me dio un infarto.... valio la pena");
+        kiosco= new Room("al  kiosco: me qiede sin tabaco voy hasta el kiosco lo compro hablo con el dependiente que es hijo de Pepe el del estanco");
         // initialise room exits
-         asilo.setExits(bar, hospital, instituto,obrasCalle ,null);
-         bar.setExits(null, null, asilo, null,null);
-         obrasCalle.setExits(null, asilo, parque,null,null);
-        instituto.setExits(asilo, parque, null, null,null);
-       hospital.setExits(asilo, null, null, null,salaUrgencias);
-      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto,null);
-      cleseYogaAlAireLibre.setExits(parque,null,null,null,null);
-      salaUrgencias.setExits(null,null,null,null,null);
+         asilo.setExits(bar, hospital, instituto,obrasCalle ,null,null);
+         bar.setExits(null, null, asilo, null,null,null);
+         obrasCalle.setExits(null, asilo, parque,null,null,kiosco);
+        instituto.setExits(asilo, parque, null, null,null,null);
+       hospital.setExits(asilo, null, null, null,salaUrgencias,null);
+      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto,null,null);
+      cleseYogaAlAireLibre.setExits(parque,null,null,null,null,null);
+      salaUrgencias.setExits(null,null,null,null,null,null);
+       kiosco.setExits(null,null,null,null,null,null);
         currentRoom =asilo;  // start game outside
     }
 

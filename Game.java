@@ -84,20 +84,7 @@ public class Game
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("te deja tu familia que se va de viaje y tu vas  " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        System.out.println();
+        printLocationInfo();
     }
 
     /**
@@ -159,6 +146,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
+        
         Room nextRoom = null;
         if(direction.equals("north")) {
             nextRoom = currentRoom.northExit;
@@ -179,20 +167,7 @@ public class Game
         else {
             currentRoom = nextRoom;
             System.out.println("por fin llegue  " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
-            }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
-            System.out.println();
+            printLocationInfo();
         }
     }
 
@@ -210,5 +185,23 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+    
+    private void printLocationInfo(){
+         System.out.print("Exits: ");
+        if(currentRoom.northExit != null) {
+            System.out.print("north ");
+        }
+        if(currentRoom.eastExit != null) {
+            System.out.print("east ");
+        }
+        if(currentRoom.southExit != null) {
+            System.out.print("south ");
+        }
+        if(currentRoom.westExit != null) {
+            System.out.print("west ");
+        }
+        System.out.println();
+        
     }
 }

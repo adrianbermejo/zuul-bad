@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque;
+        Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque,salaUrgencias;
       
                asilo  = new Room("al asilo: aqui solo hay viejas esto es aburrido demos una vuelta");
                bar = new Room(" al bar: que pena no hay partida volvere luego");
@@ -43,15 +43,16 @@ public class Game
               hospital = new Room("al hospital: como que me duele un poco la cadera voy a urgencias a que me hagan una radiografia");
               instituto = new Room("al istituto: que de chavalines jugando al futbol y los que no detras de las chicas que recuerdos ");
               parque= new Room("al parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
-        
+        salaUrgencias= new Room("a urgencias: se le levanto a una niña la falda se le vio todo y me dio un infarto.... valio la pena");
         // initialise room exits
-         asilo.setExits(bar, obrasCalle, instituto, hospital);
-         bar.setExits(null, null, asilo, null);
-         obrasCalle.setExits(null, null, parque,asilo);
-        instituto.setExits(asilo, parque, null, null);
-       hospital.setExits(asilo, null, null, null);
-      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto);
-      cleseYogaAlAireLibre.setExits(parque,null,null,null);
+         asilo.setExits(bar, hospital, instituto,obrasCalle ,null);
+         bar.setExits(null, null, asilo, null,null);
+         obrasCalle.setExits(null, asilo, parque,null,null);
+        instituto.setExits(asilo, parque, null, null,null);
+       hospital.setExits(asilo, null, null, null,salaUrgencias);
+      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto,null);
+      cleseYogaAlAireLibre.setExits(parque,null,null,null,null);
+      salaUrgencias.setExits(null,null,null,null,null);
         currentRoom =asilo;  // start game outside
     }
 
@@ -160,9 +161,11 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
-
+         if(direction.equals("southEast")) {
+            nextRoom = currentRoom.southEastExit;
+        }
         if (nextRoom == null) {
-            System.out.println("no sigo que me pierd !");
+            System.out.println("no sigo que me pierdo !");
         }
         else {
             currentRoom = nextRoom;
@@ -200,6 +203,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+          if(currentRoom.southEastExit != null) {
+            System.out.print("southEast ");
         }
         System.out.println();
         

@@ -1,5 +1,4 @@
 
-
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -21,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -37,17 +36,17 @@ public class Game
     private void createRooms()
     {
         Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque,salaUrgencias,kiosco;
-      
-               asilo  = new Room("al asilo: aqui solo hay viejas esto es aburrido demos una vuelta");
-               bar = new Room(" al bar: que pena no hay partida volvere luego");
-                       obrasCalle = new Room("a las obras en la calle: ¿que estara metiendo que ponen unos tubos tan grandes?fijo que lo ponen mal y tienen que volver a levantar");
-              cleseYogaAlAireLibre = new Room(" a cleses de Yoga Al Aire Libre: que de mojucas de buen ver hay hoy voy a hacerme el desmayado a ver si me hace el bocaaboca");
-              hospital = new Room("al hospital: como que me duele un poco la cadera voy a urgencias a que me hagan una radiografia");
-              instituto = new Room("al istituto: que de chavalines jugando al futbol y los que no detras de las chicas que recuerdos ");
-              parque= new Room("al parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
-        salaUrgencias= new Room("a urgencias: se le levanto a una niña la falda se le vio todo y me dio un infarto.... valio la pena");
-        kiosco= new Room("al  kiosco: me qiede sin tabaco voy hasta el kiosco lo compro hablo con el dependiente que es hijo de Pepe el del estanco");
-        
+
+        asilo  = new Room(" el asilo: aqui solo hay viejas esto es aburrido demos una vuelta");
+        bar = new Room(" el bar: que pena no hay partida volvere luego");
+        obrasCalle = new Room(" las obras en la calle: ¿que estara metiendo que ponen unos tubos tan grandes?fijo que lo ponen mal y tienen que volver a levantar");
+        cleseYogaAlAireLibre = new Room(" la cleses de Yoga Al Aire Libre: que de mojucas de buen ver hay hoy voy a hacerme el desmayado a ver si me hace el bocaaboca");
+        hospital = new Room(" el hospital: como que me duele un poco la cadera voy a urgencias a que me hagan una radiografia");
+        instituto = new Room(" el istituto: que de chavalines jugando al futbol y los que no detras de las chicas que recuerdos ");
+        parque= new Room("  el parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
+        salaUrgencias= new Room("  urgencias: se le levanto a una niña la falda se le vio todo y me dio un infarto.... valio la pena");
+        kiosco= new Room(" el  kiosco: me qiede sin tabaco voy hasta el kiosco lo compro hablo con el dependiente que es hijo de Pepe el del estanco");
+
         asilo.setExit("north",bar);
         asilo.setExit("east",hospital);
         asilo.setExit("south",instituto);
@@ -57,16 +56,15 @@ public class Game
         obrasCalle.setExit("south",parque);
         obrasCalle.setExit("northEast",kiosco);
         instituto.setExit("north",asilo);
-            instituto.setExit("east",parque);
-         hospital.setExit("north",asilo); 
-           hospital.setExit("southEast",salaUrgencias);
-           parque.setExit("north",obrasCalle);
-          parque.setExit("south",cleseYogaAlAireLibre);
-          parque.setExit("west",instituto);
-          cleseYogaAlAireLibre.setExit("north",parque);
+        instituto.setExit("east",parque);
+        hospital.setExit("north",asilo); 
+        hospital.setExit("southEast",salaUrgencias);
+        parque.setExit("north",obrasCalle);
+        parque.setExit("south",cleseYogaAlAireLibre);
+        parque.setExit("west",instituto);
+        cleseYogaAlAireLibre.setExit("north",parque);
         // initialise room e
-   
-     
+
         currentRoom =asilo;  // start game outside
     }
 
@@ -79,7 +77,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -123,6 +121,10 @@ public class Game
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
+
+        else if (commandWord.equals("look")) {
+            look();
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -161,9 +163,9 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        
+
         Room nextRoom = currentRoom.getExit(direction);
-      
+
         if (nextRoom == null) {
             System.out.println("no sigo que me pierdo !");
         }
@@ -189,10 +191,15 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
+
     private void printLocationInfo(){
-         System.out.println(currentRoom.getLongDescription());
+        System.out.println(currentRoom.getLongDescription());
         System.out.println();
-        
+
+    }
+
+    private void look() 
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 }

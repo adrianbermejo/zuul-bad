@@ -47,16 +47,26 @@ public class Game
               parque= new Room("al parque: voy a dar de comer a las palomas y a ver si hay alguna actividad");
         salaUrgencias= new Room("a urgencias: se le levanto a una niña la falda se le vio todo y me dio un infarto.... valio la pena");
         kiosco= new Room("al  kiosco: me qiede sin tabaco voy hasta el kiosco lo compro hablo con el dependiente que es hijo de Pepe el del estanco");
-        // initialise room exits
-         asilo.setExits(bar, hospital, instituto,obrasCalle ,null,null);
-         bar.setExits(null, null, asilo, null,null,null);
-         obrasCalle.setExits(null, asilo, parque,null,null,kiosco);
-        instituto.setExits(asilo, parque, null, null,null,null);
-       hospital.setExits(asilo, null, null, null,salaUrgencias,null);
-      parque.setExits(obrasCalle,null,cleseYogaAlAireLibre,instituto,null,null);
-      cleseYogaAlAireLibre.setExits(parque,null,null,null,null,null);
-      salaUrgencias.setExits(null,null,null,null,null,null);
-       kiosco.setExits(null,null,null,null,null,null);
+        
+        asilo.setExit("north",bar);
+        asilo.setExit("east",hospital);
+        asilo.setExit("south",instituto);
+        asilo.setExit("west",hospital);
+        bar.setExit("south",asilo);
+        obrasCalle.setExit("east",asilo);
+        obrasCalle.setExit("south",parque);
+        obrasCalle.setExit("northEast",kiosco);
+        instituto.setExit("north",asilo);
+            instituto.setExit("east",parque);
+         hospital.setExit("north",asilo); 
+           hospital.setExit("southEast",salaUrgencias);
+           parque.setExit("north",obrasCalle);
+          parque.setExit("south",cleseYogaAlAireLibre);
+          parque.setExit("west",instituto);
+          cleseYogaAlAireLibre.setExit("north",parque);
+        // initialise room e
+   
+     
         currentRoom =asilo;  // start game outside
     }
 

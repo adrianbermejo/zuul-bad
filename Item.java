@@ -29,4 +29,9 @@ public class Item
     public int getPeso(){
          return itemWeigth ;
     }
+    
+     public String informacionItem(){
+         return getDescription() + " " + ":" + " "+ getPeso() ;
+ 
+      }
 }

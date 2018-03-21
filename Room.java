@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Set;
+import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -16,10 +17,11 @@ import java.util.Set;
  */
 public class Room 
 {
-      
+
     private HashMap <String,Room>habitaciones;
     public String description;
     private Item item;
+    private ArrayList<Item> listaItems;
 
     /**
      * Create a room described "description". Initially, it has
@@ -27,12 +29,13 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description,Item item) 
+    public Room(String description) 
     {
-   
+
         habitaciones = new HashMap<>();
         this.description = description;
-        this.item= item;
+
+        listaItems = new ArrayList<Item>();
     }
 
     /**
@@ -53,10 +56,8 @@ public class Room
         habitaciones.put(direction, neighbor);
 
     }
-    
 
     
-   
     
     /**
      * @return The description of the room.
@@ -96,28 +97,49 @@ public class Room
 
         return devolver;
     }
-    
-    
+
     /**
-  * Return a long description of this room, of the form:
-  *     You are in the 'name of room'
-  *     Exits: north west southwest
-  * @return A description of the room, including exits.
-  */
- public String getLongDescription(){
-     
-      String descripcion = "Estás en " + description + "Salidas: " + getExitString();
+     * Return a long description of this room, of the form:
+     *     You are in the 'name of room'
+     *     Exits: north west southwest
+     * @return A description of the room, including exits.
+     */
+    public String getLongDescription(){
+
+        String descripcion = "Estás en " + description + "Salidas: " + getExitString();
         if (item != null){
-        
+
             descripcion += "Tu item :" + item.getDescription() + "tiene un peso:" + item.getPeso();
         }
-         return descripcion;
-     
-     
+        return descripcion;
+
      
     }
+
+    public void addItem(String itemDescription, int itemWeigth){
+        Item itemAñadido = new Item (itemDescription,itemWeigth);
+        listaItems.add(itemAñadido);
+
+    }
+
+    public String informacionObjetosDeLaSala(){
+        String informacionObjetos = "";
+        if(listaItems.size() < 0){
+            informacionObjetos = "No hay ningun de objeto";
+        }
+
+        else{
+            for(Item objetosDeLaLista  :listaItems){
+                informacionObjetos += objetosDeLaLista.informacionItem();
+
+            }
+
+        }
+
+        return informacionObjetos;
+    }
+
+    
 }
-
-
 
 

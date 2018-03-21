@@ -20,7 +20,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-     private Item item;
+    private Item item;
+    private Room ultimaSala;
     /**
      * Create the game and initialise its internal map.
      */
@@ -28,6 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        ultimaSala = null;
     }
 
     /**
@@ -63,14 +65,13 @@ public class Game
         parque.setExit("south",cleseYogaAlAireLibre);
         parque.setExit("west",instituto);
         cleseYogaAlAireLibre.setExit("north",parque);
-        // initialise room e
+        //Añadir  objetos
         cleseYogaAlAireLibre.addItem("braguitas", 200);
         bar.addItem("cafelito", 200);
         bar.addItem("churro", 100);
         currentRoom =asilo;  // start game outside
     }
 
-   
     /**
      *  Main play routine.  Loops until end of play.
      */
@@ -134,7 +135,9 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
-
+        else if (commandWord.equals("back")){
+            back();
+        }
         return wantToQuit;
     }
 
@@ -161,6 +164,7 @@ public class Game
      */
     private void goRoom(Command command) 
     {
+        ultimaSala = currentRoom;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -214,5 +218,12 @@ public class Game
     private void eat() 
     {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+
+    private void back(){
+        if(ultimaSala != null){
+            currentRoom = ultimaSala;
+            printLocationInfo();
+        }
     }
 }

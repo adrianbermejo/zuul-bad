@@ -16,8 +16,10 @@ import java.util.Set;
  */
 public class Room 
 {
+      
     private HashMap <String,Room>habitaciones;
     public String description;
+    private Item item;
 
     /**
      * Create a room described "description". Initially, it has
@@ -25,10 +27,12 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description,Item item) 
     {
+   
         habitaciones = new HashMap<>();
         this.description = description;
+        this.item= item;
     }
 
     /**
@@ -39,7 +43,6 @@ public class Room
      * @param south The south exit.
      * @param west The west exit.
      */
-
     /**
      * Define an exit from this room.
      * @param direction The direction of the exit.
@@ -50,6 +53,10 @@ public class Room
         habitaciones.put(direction, neighbor);
 
     }
+    
+
+    
+   
     
     /**
      * @return The description of the room.
@@ -99,7 +106,12 @@ public class Room
   */
  public String getLongDescription(){
      
-     return "tu estas en" +description + "y puedes ir a" +getExitString();
+      String descripcion = "Estás en " + description + "Salidas: " + getExitString();
+        if (item != null){
+        
+            descripcion += "Tu item :" + item.getDescription() + "tiene un peso:" + item.getPeso();
+        }
+         return descripcion;
      
      
      

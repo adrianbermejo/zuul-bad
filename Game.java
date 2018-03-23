@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,25 +19,25 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Item item;
-    private Room ultimaSala;
-    private Stack<Room> stack;
+  
+   
+   
+    private Player jugador2;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
+        
         parser = new Parser();
-         stack = new Stack<>();
+        jugador2 =new Player(createRooms());
        
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
+    private Room createRooms()
     {
         Room asilo,bar,instituto,obrasCalle,cleseYogaAlAireLibre,hospital,parque,salaUrgencias,kiosco;
 
@@ -68,10 +68,11 @@ public class Game
         parque.setExit("west",instituto);
         cleseYogaAlAireLibre.setExit("north",parque);
         //Añadir  objetos
-        cleseYogaAlAireLibre.addItem("braguitas", 200);
-        bar.addItem("cafelito", 200);
-        bar.addItem("churro", 100);
-        currentRoom =asilo;  // start game outside
+        cleseYogaAlAireLibre.addItem("braguitas","braguitas usadas de un coleguala", 200);
+        bar.addItem("cafelito", "que cafes mas ricos hace paco",200);
+        bar.addItem("churro","el churro eata un poco frio pero se deja comer", 100);
+         // start game outside
+        return asilo;
     }
 
     /**
@@ -102,8 +103,8 @@ public class Game
         System.out.println("este simulador es una pequeña version de lo que hacen los viejos verdes en su dia a dia.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("te deja tu familia que se va de viaje y tu vas  " + currentRoom.getDescription());
-        printLocationInfo();
+        System.out.println("te deja tu familia que se va de viaje y tu vas  " + jugador2.current().getDescription());
+        jugador2.look();
     }
 
     /**
@@ -119,27 +120,28 @@ public class Game
             System.out.println("I don't know what you mean...");
             return false;
         }
-
+        
         String commandWord = command.getCommandWord();
         if (commandWord.equals("help")) {
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            jugador2.goRoom(command);
         }
 
         else if (commandWord.equals("look")) {
-            look();
+            jugador2.look();
         }
         else if (commandWord.equals("eat")) {
-            eat();
+            jugador2.eat();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("back")){
-            back();
+            jugador2.back();
         }
+        
         return wantToQuit;
     }
 
@@ -160,35 +162,8 @@ public class Game
         System.out.println(parser.getCommandList());
     }
 
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("no sigo que me pierdo !");
-        }
-        else {
-             stack.push(currentRoom);
-             currentRoom = currentRoom.getExit(direction);
-            System.out.println("por fin llegue  " + currentRoom.getDescription());
-            printLocationInfo();
-        }
-    }
+    
+   
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
@@ -206,30 +181,7 @@ public class Game
         }
     }
 
-    private void printLocationInfo(){
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println();
+   
 
-    }
-
-    private void look() 
-    {
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println(currentRoom.informacionObjetosDeLaSala());
-    }
-
-    private void eat() 
-    {
-        System.out.println("You have eaten now and you are not hungry any more");
-    }
-
-    private void back(){
-         if(!stack.empty()){
-              currentRoom= stack.pop();
-               printLocationInfo();
-            }
-             else{
-                  System.out.println("No se puede volver para atras");
-                }
-    }
+    
 }

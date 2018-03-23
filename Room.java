@@ -116,8 +116,8 @@ public class Room
      
     }
 
-    public void addItem(String itemDescription, int itemWeigth){
-        Item itemAñadido = new Item (itemDescription,itemWeigth);
+    public void addItem( String id ,String itemDescription, int itemWeigth){
+        Item itemAñadido = new Item (id,itemDescription,itemWeigth);
         listaItems.add(itemAñadido);
 
     }

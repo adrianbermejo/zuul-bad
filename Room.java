@@ -22,6 +22,12 @@ public class Room
     public String description;
     private Item item;
     private ArrayList<Item> listaItems;
+    public Room northExit;
+    public Room southExit;
+    public Room southEastExit;
+    public Room eastExit;
+    public Room westExit;
+    public Room northEastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -57,8 +63,6 @@ public class Room
 
     }
 
-    
-    
     /**
      * @return The description of the room.
      */
@@ -67,35 +71,57 @@ public class Room
         return description;
     }
 
-    /**
-     * Return a description of the room's exits.
-     * For example: "Exits: north east west"
-     *
-     * @ return A description of the available exits.
-     */
-    public Room getExit(String direction){
-
-        return habitaciones.get(direction);
-
-    }
-
-    /**
-     * Return a description of the room's exits.
-     * For example: "Exits: north east west"
-     *
-     * @ return A description of the available exits.
-     */
-    public String getExitString(){
-
-        String devolver ="Exit: ";
-        Set<String>direccion=habitaciones.keySet();
-        for(String actual:direccion){
-
-            devolver+=actual +" ";
-
+    public Room getExit(String direccion){
+        Room salaADevolver = null;
+        if(direccion.equals("north")){
+            salaADevolver =habitaciones.get("north");
+        }
+        if(direccion.equals("northEast")){
+            salaADevolver=habitaciones.get("northEast");
+        }
+        if(direccion.equals("south")){
+            salaADevolver=habitaciones.get("south");
+        }
+        if(direccion.equals("southEast")){
+            salaADevolver=habitaciones.get("southEast");
+        }
+        if(direccion.equals("east")){
+            salaADevolver=habitaciones.get("east");
+        }
+        if(direccion.equals("west")){
+            salaADevolver=habitaciones.get("west");
         }
 
-        return devolver;
+        return salaADevolver;
+    }
+
+    public String getExitString(){
+        String exits = "";
+        if(habitaciones.get("north") != null){
+            exits += "north ";
+
+        }
+        if(habitaciones.get("northEast") != null){
+            exits += "northEast ";
+
+        }
+        if(habitaciones.get("south") != null){
+            exits += "south ";
+
+        }
+        if(habitaciones.get("east") != null){
+            exits += "east ";
+
+        }
+        if(habitaciones.get("west") != null){
+            exits += "west ";
+
+        }
+        if(habitaciones.get("southEast") != null){
+            exits += "southEast ";
+
+        }
+        return exits;
     }
 
     /**
@@ -113,11 +139,10 @@ public class Room
         }
         return descripcion;
 
-     
     }
 
-    public void addItem( String id ,String itemDescription, int itemWeigth){
-        Item itemAñadido = new Item (id,itemDescription,itemWeigth);
+    public void addItem(String id ,String itemDescription, int itemWeigth, boolean cogerObjeto){
+        Item itemAñadido = new Item (id,itemDescription,itemWeigth,cogerObjeto);
         listaItems.add(itemAñadido);
 
     }
@@ -139,7 +164,31 @@ public class Room
         return informacionObjetos;
     }
 
-    
-}
+    public ArrayList getItem(){
+        return listaItems;
 
+     }
+
+    public void itemQueSoltar(Item item)
+    {
+        listaItems.add(item);        
+    }
+
+    public Item itemACoger(String item ){
+        Item itemCogido = null;
+        for(Item itemActual : listaItems){
+            if(itemActual.getId().equals(item)){
+                itemCogido = itemActual;
+            }
+
+         }
+        listaItems.remove(itemCogido);
+        return itemCogido;
+    }
+
+    public void itemASoltar(Item item){
+        listaItems.add(item);
+
+     }
+ }
 

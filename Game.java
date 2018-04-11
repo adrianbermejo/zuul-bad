@@ -19,9 +19,6 @@
 public class Game 
 {
     private Parser parser;
-  
-   
-   
     private Player jugador2;
     /**
      * Create the game and initialise its internal map.
@@ -68,9 +65,9 @@ public class Game
         parque.setExit("west",instituto);
         cleseYogaAlAireLibre.setExit("north",parque);
         //Añadir  objetos
-        cleseYogaAlAireLibre.addItem("braguitas","braguitas usadas de un coleguala", 200);
-        bar.addItem("cafelito", "que cafes mas ricos hace paco",200);
-        bar.addItem("churro","el churro eata un poco frio pero se deja comer", 100);
+        cleseYogaAlAireLibre.addItem("braguitas","braguitas usadas de un coleguala", 200,true);
+        bar.addItem("cafelito", "que cafes mas ricos hace paco",200,false);
+        bar.addItem("churro","el churro eata un poco frio pero se deja comer", 100,true);
          // start game outside
         return asilo;
     }
@@ -141,7 +138,19 @@ public class Game
         else if (commandWord.equals("back")){
             jugador2.back();
         }
-        
+        else if (commandWord.equals("take")) {
+            jugador2.take();
+        }
+        else if (commandWord.equals("items")){
+            jugador2.items();
+        }
+        else if (commandWord.equals("drop")){
+            jugador2.drop(command);
+        }
+
+        else if (commandWord.equals("quit")) {
+            wantToQuit = quit(command);
+        }
         return wantToQuit;
     }
 

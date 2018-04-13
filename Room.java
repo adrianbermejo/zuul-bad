@@ -1,5 +1,5 @@
 import java.util.HashMap;
-import java.util.Set;
+
 import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
@@ -155,7 +155,7 @@ public class Room
 
         else{
             for(Item objetosDeLaLista  :listaItems){
-                informacionObjetos += objetosDeLaLista.informacionItem();
+                informacionObjetos += objetosDeLaLista.informacionItem() + " ";
 
             }
 
@@ -189,6 +189,6 @@ public class Room
     public void itemASoltar(Item item){
         listaItems.add(item);
 
-     }
+      }
  }
 

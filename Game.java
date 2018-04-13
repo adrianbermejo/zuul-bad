@@ -56,19 +56,22 @@ public class Game
         obrasCalle.setExit("east",asilo);
         obrasCalle.setExit("south",parque);
         obrasCalle.setExit("northEast",kiosco);
-        instituto.setExit("north",asilo);
-        instituto.setExit("east",parque);
-        hospital.setExit("north",asilo); 
+        instituto.setExit("east",asilo);
+        instituto.setExit("west",parque);
+        hospital.setExit("west",asilo); 
         hospital.setExit("southEast",salaUrgencias);
         parque.setExit("north",obrasCalle);
         parque.setExit("south",cleseYogaAlAireLibre);
         parque.setExit("west",instituto);
         cleseYogaAlAireLibre.setExit("north",parque);
         //Añadir  objetos
-        cleseYogaAlAireLibre.addItem("braguitas","braguitas usadas de un coleguala", 200,true);
-        bar.addItem("cafelito", "que cafes mas ricos hace paco",200,false);
-        bar.addItem("churro","el churro eata un poco frio pero se deja comer", 100,true);
-         // start game outside
+        cleseYogaAlAireLibre.addItem("braguitas","braguitas usadas de un colegiala", 200,true);
+        bar.addItem("cafelito", "que cafes mas ricos hace paco",200,true);
+        bar.addItem("churro","el churro eata un poco frio pero se deja comer", 200,true);
+        bar.addItem("chicle","chicles de fressa", 200,true);
+        bar.addItem("jarron","un jarron muy bonito", 2000,true);
+        asilo.addItem("fuente","una fuente", 2000,false);
+         // start game outsid
         return asilo;
     }
 
@@ -139,7 +142,7 @@ public class Game
             jugador2.back();
         }
         else if (commandWord.equals("take")) {
-            jugador2.take();
+            jugador2.take(command.getSecondWord());
         }
         else if (commandWord.equals("items")){
             jugador2.items();
@@ -148,6 +151,12 @@ public class Game
             jugador2.drop(command);
         }
 
+         else if (commandWord.equals("resistencia")){
+            jugador2.resistencia();
+        }
+         else if (commandWord.equals("beber")){
+            jugador2.beber();
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }

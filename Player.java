@@ -14,8 +14,9 @@ public class Player
     private Stack<Room> stack;
     private ArrayList<Item> bolsillo;
     private int pesoEncima;
-    private static final int PESOMAXIMO=1000;
+    private static final int PESOMAXIMO=500;
     private Item item;
+    private int resistencia;
     /**
      * Constructor for objects of class jugador
      */
@@ -24,8 +25,9 @@ public class Player
         // initialise instance variables
         this.currentRoom =currentRoom;
         stack = new Stack<>();
-        bolsillo = new ArrayList<>();
+        bolsillo = new ArrayList<Item>();
         pesoEncima =0;
+        resistencia = 5;
     }
 
     /** 
@@ -50,15 +52,27 @@ public class Player
         if (nextRoom == null) {
             System.out.println("no sigo que me pierdo !");
         }
+        
+        else if(resistencia ==0 ){
+             System.out.println("estoy muy cansado paremos un rato !");
+        }
         else {
             stack.push(currentRoom);
             currentRoom = currentRoom.getExit(direction);
             System.out.println("por fin llegue  " + currentRoom.getDescription());
             look();
+            reducirResistencia();
         }
     }
 
-    
+    public void resistencia()
+    {
+          System.out.println(  "que de energia tengo con esto podre anda " + resistencia +  "veces");
+          if(resistencia<3){
+              System.out.println("estoy empezando a cansarme deberia beeber un cafelito en el bar de paco");
+              
+            }
+    }
     
     public void look() 
     {
@@ -86,55 +100,45 @@ public class Player
         return currentRoom;
     }
 
-    public void take() 
-    {
-        System.out.println("recojigo objeto");
-        System.out.println(currentRoom.informacionObjetosDeLaSala());
-    }
 
-    private void take(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know the item to take...
-            System.out.println("No has indicado el nombre el objeto a cojer");
-            return;
-        }
-        ArrayList<Item>bolsilloActual = null;
-        ArrayList<Item> a= currentRoom.getItem();
-        if (a.size() > 0){
-            bolsilloActual = a;
-        }
-        String objetoACoger = command.getSecondWord();
 
-        if (bolsilloActual != null && pesoEncima + bolsilloActual.get(Integer.parseInt(objetoACoger)).getPeso() < PESOMAXIMO){
-            System.out.println("Has cogido el siguiente objeto:" + "\n");
-            //Mostramos la posicion del objeto y la informacion del item
-            System.out.println("Posicion: " + Integer.parseInt(objetoACoger) + "\n" + " " 
-                + bolsilloActual.get(Integer.parseInt(objetoACoger)).informacionItem());
-            //Mostramos el peso de la mochila
-            pesoEncima += bolsilloActual.get(Integer.parseInt(objetoACoger)).getPeso();
-            bolsillo.add(bolsilloActual.get(Integer.parseInt(objetoACoger)));
-            //Eliminamos la posicion del objeto que hemos cogido
-            bolsilloActual.remove(Integer.parseInt(objetoACoger));
-        }
+    public void take(String item){
 
+        Item itemACoger = currentRoom.itemACoger(item);
+
+        if(itemACoger == null){
+            System.out.println("No hay objetos");
+        }
         else{
-            if (bolsilloActual == null){
-                System.out.println("No hay objetos en la sala");
+            if(itemACoger.getCogerObjeto()){
+                if(itemACoger.getPeso() + pesoEncima > PESOMAXIMO){
+                    System.out.println("Peso maximo superado" + "deje  algun objeto");
+                    currentRoom.itemASoltar(itemACoger);
+                }
+                else{
+                    bolsillo.add(itemACoger);
+                    pesoEncima += itemACoger.getPeso() ;
+                    System.out.println("Has recogido" + itemACoger.getDescription());
+                    
+                }
+            }
+            else{
+                System.out.println("NO PUEDES COGER ES OBJETO  ROBAR ESTA MAL");
+                currentRoom.itemASoltar(itemACoger);
             }
 
         }
-      }
-      
-       public void items(){
+    }
+    
 
+    public void items(){
         if (!bolsillo.isEmpty()) {
             for (Item itemActual : bolsillo) {
-                System.out.println(itemActual.getDescription());
+                System.out.println(itemActual.getId() + " " + itemActual.getDescription());
             }
         }
         else {
-            System.out.println("Tienes el bolsillo vacío.");
+            System.out.println("Tienes el bolsillo vacía.");
         }
     }
 
@@ -157,5 +161,31 @@ public class Player
             pesoEncima -= itemABorrar.getPeso();
             System.out.println("Has soltado " + itemABorrar.getDescription() + ", con un peso de " + itemABorrar.getPeso());
         }
+    }
+    
+    public void beber()
+    {
+       
+        Item hayCafe = null;
+        for (Item itemASoltar : bolsillo) {
+            if (itemASoltar.getId().equals("cafelito")) {
+                 hayCafe= itemASoltar; 
+                 resistencia += 5;                 
+            }
+        }
+        if (hayCafe!=null){
+        bolsillo.remove(hayCafe);
+         System.out.println("te has bebido un cafetito muy rico tienes mucha energia para pasear " + resistencia);  
+      }
+        else{
+          System.out.println("no tienes nada que beber ");  
+        }
+        
+    }
+    
+    public void reducirResistencia()
+    {
+     resistencia -=1;   
+        
     }
 }

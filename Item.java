@@ -11,7 +11,7 @@ public class Item
     private int itemWeigth;
     private String itemDescription;
     private String id;
-     private boolean cogerObjeto;
+    private boolean cogerObjeto;
 
     /**
      * Constructor for objects of class item
@@ -37,7 +37,7 @@ public class Item
     }
     
      public String informacionItem(){
-         return getId() + " " +getDescription() + " " + ":" + " "+ getPeso() ;
+         return getId() + "  " +getDescription() + " " + ":" + " "+ getPeso() ;
  
       }
       public boolean getCogerObjeto()

@@ -20,15 +20,16 @@ public class Game
 {
     private Parser parser;
     private Player jugador2;
+    private CommandWord commandWord;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        
+
         parser = new Parser();
         jugador2 =new Player(createRooms());
-       
+
     }
 
     /**
@@ -71,7 +72,7 @@ public class Game
         bar.addItem("chicle","chicles de fressa", 200,true);
         bar.addItem("jarron","un jarron muy bonito", 2000,true);
         asilo.addItem("fuente","una fuente", 2000,false);
-         // start game outsid
+        // start game outsid
         return asilo;
     }
 
@@ -115,81 +116,75 @@ public class Game
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
-
-        if(command.isUnknown()) {
+        switch (commandWord) {
+            case UNKNOWN:
             System.out.println("I don't know what you mean...");
-            return false;
-        }
-        
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+            break;
+            case HELP:
             printHelp();
-        }
-        else if (commandWord.equals("go")) {
+            break;
+
+            case GO:
             jugador2.goRoom(command);
-        }
-
-        else if (commandWord.equals("look")) {
+            break;
+            case LOOK:
             jugador2.look();
-        }
-        else if (commandWord.equals("eat")) {
+            break;
+            case EAT:
             jugador2.eat();
-        }
-        else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord.equals("back")){
-            jugador2.back();
-        }
-        else if (commandWord.equals("take")) {
-            jugador2.take(command.getSecondWord());
-        }
-        else if (commandWord.equals("items")){
-            jugador2.items();
-        }
-        else if (commandWord.equals("drop")){
-            jugador2.drop(command);
-        }
 
-         else if (commandWord.equals("resistencia")){
-            jugador2.resistencia();
-        }
-         else if (commandWord.equals("beber")){
-            jugador2.beber();
-        }
-        else if (commandWord.equals("quit")) {
+            case QUIT:
             wantToQuit = quit(command);
+            break;
+            case BACK:
+            jugador2.back();
+            break;
+            case TAKE:
+            jugador2.take(command.getSecondWord());
+            break;
+            case ITEMS:
+            jugador2.items();
+            break;
+            case DROP:
+            jugador2.drop(command);
+            break;
+
+            case RESISTENCIA:
+            jugador2.resistencia();
+            break;
+            case BEBER:
+            jugador2.beber();
+            break;
+
+            
         }
         return wantToQuit;
     }
+        // implementations of user commands:
 
-    // implementations of user commands:
+        /**
+         * Print out some help information.
+         * Here we print some stupid, cryptic message and a list of the 
+         * command words.
+         */
+        private void printHelp() 
+        {
+            System.out.println("You are lost. You are alone. You wander");
+            System.out.println("around at the university.");
+            System.out.println();
+            System.out.println("Your command words are:");
+            System.out.println("Your command words are:");
+            System.out.println(parser.getCommandList());
+        }
 
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
-     */
-    private void printHelp() 
-    {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
-        System.out.println("Your command words are:");
-        System.out.println(parser.getCommandList());
-    }
-
-    
    
-
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
+        /** 
+         * "Quit" was entered. Check the rest of the command to see
+         * whether we really quit the game.
+         * @return true, if this command quits the game, false otherwise.
+         */
+        private boolean quit(Command command) 
+        {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
@@ -199,7 +194,5 @@ public class Game
         }
     }
 
-   
 
-    
 }
